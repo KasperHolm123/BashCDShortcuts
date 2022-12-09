@@ -11,6 +11,20 @@ function testfunc () {
     fi
 }
 
+function testfunc2 () {
+    while read line; do 
+        key=$(echo $line | cut -d "|" -f1)
+        data=$(echo $line | cut -d "|" -f2)
+        shortcuts[$key]="$data"
+    done < testfile.txt
+
+    for x in "${!shortcuts[@]}"
+    do
+        echo "key   : $x"
+        echo "value : ${shortcuts[$x]}"
+    done
+}
+
 
 function cdproj2 () {
     if [ ! -e ~/BashCDShortcuts/shortcuts.txt ] && [ $# == 0 ]
