@@ -1,10 +1,13 @@
 #!/bin/bash
 
+# declare internal container
 declare -A shortcuts
 
 
 function fill_array() {
-    declare -gA shortcuts
+    # reset internal container
+    shortcuts=()
+
     while read line; do 
         key=$(echo $line | cut -d "|" -f1)
         data=$(echo $line | cut -d "|" -f2)
@@ -13,7 +16,7 @@ function fill_array() {
 }
 
 # fill array with all shortcuts in container
-if [ -e ~/BachCDShortcuts/ ]
+if [ -e ~/BashCDShortcuts/ ]
 then
     fill_array
 fi
@@ -34,7 +37,7 @@ function cdproj () {
     fi
 
     # container not found
-    if [ ! -e ~/BashCDShortcuts/shortcuts.txt ] && [ $1 != "-m" ] && [ $1 != "--makedirectory" ]
+    if [ ! -e ~/BashCDShortcuts/shortcuts.txt ] && [ $1 != "-m" ] && [ $1 != "--makedirectory" ] && [ $1 != "-h" ]
     then
         echo "Container directory missing. Use 'cdproj -m' to create it"
         
@@ -45,11 +48,13 @@ function cdproj () {
     if [ $1 == "-h" ] || [ $1 == "--help" ]
     then
         echo "usage"
-        echo "  -l or --list              Shows all available shortcuts"
-        echo "  -m or --makedirectory     Creates shortcut container directory"
-        echo "  -d or --delete            Deletes shortcut container directory"
-        echo "  -c or --changedirectory   Changes directory to the value of a shortcut"
-        echo "  -n or --newshortcut       Creates a new shortcut"
+        echo "  -l or --list                Shows all available shortcuts"
+        echo "  -m or --makedirectory       Creates shortcut container directory"
+        echo "  -d or --delete              Deletes shortcut container directory"
+        echo "  -c or --changedirectory     Changes directory to the value of a shortcut"
+        echo "  -n or --newshortcut         Creates a new shortcut"
+        echo '      syntax  "KEY|PATH" include double quotes'
+        echo "  -r or --removeshortcut      Removes a shortcut"
     fi
 
     # list all shortcuts
@@ -97,5 +102,13 @@ function cdproj () {
     then
         echo "$2" >> ~/BashCDShortcuts/shortcuts.txt
         fill_array
+    fi
+
+    # remove shortcut
+    if [ $1 == "-r" ] || [ $1 == "--removeshortcut" ]
+    then
+        echo "$2|${shortcuts[$2]}"
+        # echo "removed $1 from shortcuts"
+        sed -i '/$2|${shortcuts[$2]}/d' ~/BashCDShortcuts/shortcuts.txt
     fi
 }
