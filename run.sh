@@ -37,7 +37,7 @@ function cdproj () {
         return
     fi
 
-    while getopts "hlmdn:r:" option; do
+    while getopts "hlmpn:d:" option; do
         case $option in
             h) # help
                 usage
@@ -48,14 +48,14 @@ function cdproj () {
             m) # create container dir
                 makedir
                 return;;
-            d) # delete container dir
-                deletedir
+            p) # delete container dir
+                purgedir
                 return;;
             n) # create new shortcut
                 newshortcut
                 return;;
-            r) # remove shortcut
-                removeshortcut
+            d) # remove shortcut
+                deleteshortcut
                 return;;
             *) # default
                 echo "Error: Invalid option"
@@ -96,9 +96,9 @@ makedir() {
     fill_array
 }
 
-deletedir() {
+purgedir() {
     rm -rf ~/BashCDShortcuts
-    echo "Deleted ~/BashCDShortcuts recursively"
+    echo "Purged ~/BashCDShortcuts recursively"
 }
 
 newshortcut() {
@@ -106,7 +106,7 @@ newshortcut() {
     fill_array
 }
 
-removeshortcut() {
+deleteshortcut() {
     echo "$OPTARG=${shortcuts[$OPTARG]}"
     # echo "removed $1 from shortcuts"
     sed -i '/$OPTARG=${shortcuts[$OPTARG]}/d' ~/BashCDShortcuts/shortcuts.txt
@@ -119,15 +119,5 @@ changedir() {
             pwd
         else
             echo "Shortcut not found"
-    fi
-}
-
-function temp() {
-    # remove shortcut
-    if [ $1 == "-r" ] || [ $1 == "--removeshortcut" ]
-    then
-        echo "$2|${shortcuts[$2]}"
-        # echo "removed $1 from shortcuts"
-        sed -i '/$2|${shortcuts[$2]}/d' ~/BashCDShortcuts/shortcuts.txt
     fi
 }
