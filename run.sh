@@ -69,11 +69,11 @@ usage() {
     echo "options:"
     echo "-l      Shows all available shortcuts"
     echo "-m      Creates shortcut container directory"
-    echo "-d      Deletes shortcut container directory"
+    echo "-p      Deletes shortcut container directory"
     echo "-c      Changes directory to the value of a shortcut"
     echo "-n      Creates a new shortcut"
     echo '  syntax  "KEY|PATH" include double quotes and "|"'
-    echo "-r      Removes a shortcut"
+    echo "-d      Deletes a shortcut"
 }
 
 listall() {
