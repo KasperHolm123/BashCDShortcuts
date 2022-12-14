@@ -31,6 +31,12 @@ function cdproj () {
         return
     fi
 
+    if [ $# == 0 ]; then
+        echo "Invalid usage"
+        echo "use 'cdproj -h' to get help"
+        return
+    fi
+
     declare cdarg=$1
     if [ ${cdarg:0:1} != "-" ]; then
         changedir
@@ -81,8 +87,7 @@ usage() {
 
 listall() {
     echo "All shortcuts:"
-    for x in "${!shortcuts[@]}"
-    do
+    for x in "${!shortcuts[@]}"; do
         echo "$x=${shortcuts[$x]}"
     done
 }
@@ -117,14 +122,13 @@ deleteshortcut() {
 }
 
 changedir() {
-    # if [ "${shortcuts[$cdarg]}" ]
-    #     then
-    #         cd ~/${shortcuts[$cdarg]}
-    #         pwd
-    #     else
-    #         echo "Shortcut not found"
-    # fi
-    return
+    if [ "${shortcuts[$cdarg]}" ]
+        then
+            cd ~/${shortcuts[$cdarg]}
+            pwd
+        else
+            echo "Shortcut not found"
+    fi
 }
 
 appendpath() {
