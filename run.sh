@@ -43,7 +43,7 @@ function cdproj () {
         return
     fi
 
-    while getopts "hlmpn:d:a:" option; do
+    while getopts ":hlmpn:d:a:" option; do
         case $option in
             h) # help
                 usage
