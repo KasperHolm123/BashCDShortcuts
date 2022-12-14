@@ -37,7 +37,7 @@ function cdproj () {
         return
     fi
 
-    while getopts "hlmpn:d:" option; do
+    while getopts "hlmpn:d:a:" option; do
         case $option in
             h) # help
                 usage
@@ -56,6 +56,9 @@ function cdproj () {
                 return;;
             d) # remove shortcut
                 deleteshortcut
+                return;;
+            a) # append path to existing shortcut
+                appendpath
                 return;;
             *) # default
                 echo "Error: Invalid option"
@@ -107,17 +110,23 @@ newshortcut() {
 }
 
 deleteshortcut() {
-    echo "$OPTARG=${shortcuts[$OPTARG]}"
-    # echo "removed $1 from shortcuts"
-    sed -i '/$OPTARG=${shortcuts[$OPTARG]}/d' ~/BashCDShortcuts/shortcuts.txt
+    # echo "removed shortcuts[$ORTARG] from shortcuts"
+    sed "s/$OPTARG=${shortcuts[$OPTARG]}//g" < ~/BashCDShortcuts/shortcuts.txt > ~/BashCDShortcuts/shortcuts.txt
+    echo "removed '$OPTARG' from shortcuts"
+    fill_array
 }
 
 changedir() {
-    if [ "${shortcuts[$cdarg]}" ]
-        then
-            cd ~/${shortcuts[$cdarg]}
-            pwd
-        else
-            echo "Shortcut not found"
-    fi
+    # if [ "${shortcuts[$cdarg]}" ]
+    #     then
+    #         cd ~/${shortcuts[$cdarg]}
+    #         pwd
+    #     else
+    #         echo "Shortcut not found"
+    # fi
+    return
+}
+
+appendpath() {
+    echo "$OPTARG"
 }
