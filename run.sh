@@ -22,18 +22,19 @@ then
     fill_array
 fi
 
-function cdproj () {
+# cds = change-directory shortcuts
+function cds () {
     unset opt OPTARG OPTIND # reset environment variables
 
     # only allow "-h" if the container dir doesn't exist
     if [ ! -e ~/BashCDShortcuts ] && [ $1 != "-h" ] && [ $1 != "-m" ]; then
-        echo "Container directory missing. Use 'cdproj -m' to create it"
+        echo "Container directory missing. Use 'cds -m' to create it"
         return
     fi
 
     if [ $# == 0 ]; then
         echo "Invalid usage"
-        echo "use 'cdproj -h' to get help"
+        echo "use 'cds -h' to get help"
         return
     fi
 
@@ -58,6 +59,7 @@ function cdproj () {
                 purgedir
                 return;;
             n) # create new shortcut
+                # an argument must be given
                 newshortcut
                 return;;
             d) # remove shortcut
@@ -67,7 +69,8 @@ function cdproj () {
                 appendpath
                 return;;
             *) # default
-                echo "Error: Invalid option"
+                echo "Error: Invalid usage"
+                echo "use 'cds -h' to get help"
                 return;;
         esac
     done
