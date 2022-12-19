@@ -127,7 +127,7 @@ deleteshortcut() {
 changedir() {
     if [ "${shortcuts[$cdarg]}" ]
         then
-            cd ~/${shortcuts[$cdarg]}
+            cd ${shortcuts[$cdarg]}
             pwd
         else
             echo "Shortcut not found"
