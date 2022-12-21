@@ -84,7 +84,7 @@ usage() {
     echo "-p      Deletes shortcut container directory"
     echo "-c      Changes directory to the value of a shortcut"
     echo "-n      Creates a new shortcut"
-    echo '  syntax  "KEY|PATH" include double quotes and "|"'
+    echo '  syntax  "YOURKEY=YOURPATH" remember to include double quotes and "="'
     echo "-d      Deletes a shortcut"
 }
 
@@ -113,7 +113,7 @@ purgedir() {
 }
 
 newshortcut() {
-    echo "$OPTARG" >> ~/BashCDShortcuts/shortcuts.txt
+    echo "${OPTARG//\\//}" >> ~/BashCDShortcuts/shortcuts.txt
     fill_array
 }
 
@@ -127,8 +127,9 @@ deleteshortcut() {
 changedir() {
     if [ "${shortcuts[$cdarg]}" ]
         then
-            cd ${shortcuts[$cdarg]}
-            pwd
+            cd "${shortcuts[$cdarg]}"
+            echo ${shortcuts[$cdarg]}
+            # pwd
         else
             echo "Shortcut not found"
     fi
