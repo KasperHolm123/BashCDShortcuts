@@ -65,9 +65,6 @@ function cds () {
             d) # remove shortcut
                 deleteshortcut
                 return;;
-            a) # append path to existing shortcut
-                appendpath
-                return;;
             *) # default
                 echo "Error: Invalid usage"
                 echo "use 'cds -h' to get help"
@@ -133,8 +130,4 @@ changedir() {
         else
             echo "Shortcut not found"
     fi
-}
-
-appendpath() {
-    echo "$OPTARG"
 }
