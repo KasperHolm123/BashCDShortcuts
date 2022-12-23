@@ -111,6 +111,7 @@ purgedir() {
 
 newshortcut() {
     echo "${OPTARG//\\//}" >> ~/BashCDShortcuts/shortcuts.txt
+	echo "Shortcut created"
     fill_array
 }
 
