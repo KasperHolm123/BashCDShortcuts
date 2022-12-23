@@ -117,7 +117,7 @@ newshortcut() {
 
 deleteshortcut() {
     # echo "removed shortcuts[$ORTARG] from shortcuts"
-    sed "s/$OPTARG=${shortcuts[$OPTARG]}//g" < ~/BashCDShortcuts/shortcuts.txt > ~/BashCDShortcuts/shortcuts.txt
+    sed -i "/$OPTARG=${shortcuts[$OPTARG]}/d" ~/BashCDShortcuts/shortcuts.txt
     echo "removed '$OPTARG' from shortcuts"
     fill_array
 }
