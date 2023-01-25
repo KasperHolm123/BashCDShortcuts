@@ -44,7 +44,7 @@ function cds () {
         return
     fi
 
-    while getopts ":hlmpn:d:a:" option; do
+    while getopts ":hlmpn:c:d:a:" option; do
         case $option in
             h) # help
                 usage
@@ -58,7 +58,10 @@ function cds () {
             p) # delete container dir
                 purgedir
                 return;;
-            n) # create new shortcut
+            n) # create new short at PWD
+                newpwdshortcut
+                return;;
+            c) # create new shortcut
                 # an argument must be given
                 newshortcut
                 return;;
@@ -79,8 +82,8 @@ usage() {
     echo "-l      Shows all available shortcuts"
     echo "-m      Creates shortcut container directory"
     echo "-p      Deletes shortcut container directory"
-    echo "-c      Changes directory to the value of a shortcut"
-    echo "-n      Creates a new shortcut"
+    echo "-n      Creates a new shortcut at PWD"
+    echo "-c      Creates a new shortcut at a custom path"
     echo '  syntax  "YOURKEY=YOURPATH" remember to include double quotes and "="'
     echo "-d      Deletes a shortcut"
 }
@@ -112,6 +115,12 @@ purgedir() {
 newshortcut() {
     echo "${OPTARG//\\//}" >> ~/BashCDShortcuts/shortcuts.txt
 	echo "Shortcut created"
+    fill_array
+}
+
+newpwdshortcut() {
+    echo "${OPTARG}=${PWD}" >> ~/BashCDShortcuts/shortcuts.txt
+    echo "Shortcut created at PWD"
     fill_array
 }
 
