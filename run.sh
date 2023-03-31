@@ -126,7 +126,7 @@ newpwdshortcut() {
 
 deleteshortcut() {
     # echo "removed shortcuts[$ORTARG] from shortcuts"
-    sed -i "/$OPTARG=${shortcuts[$OPTARG]}/d" ~/BashCDShortcuts/shortcuts.txt
+    sed -i "/^$OPTARG/d" ~/BashCDShortcuts/shortcuts.txt
     echo "removed '$OPTARG' from shortcuts"
     fill_array
 }
